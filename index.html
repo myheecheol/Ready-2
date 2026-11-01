@@ -6,12 +6,14 @@
 <title>AI 무역 분석가</title>
 <meta name="description" content="비상 사회 6-2 「③ 세계의 무역」 12~16차시 데이터 분석형 AI 융합수업용 웹앱">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800&display=swap">
 <style>
 :root{
   --blue:#2F5BAF; --blue-d:#244a90; --blue-l:#DFE6F4; --blue-ll:#F2F5FB;
   --bg:#E9EDF4; --title:#222222; --text:#4D4D4D; --card:#FFFFFF; --warn:#C0392B;
   --line:#D3DAE6; --muted:#7A8394; --grey:#B5BCC8; --grey-l:#EEF0F4; --ok:#2E7D4F; --ok-l:#E7F3EC;
-  --font:"Pretendard","Pretendard Variable",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic","맑은 고딕",sans-serif;
+  --font:"Pretendard","Pretendard Variable","Noto Sans KR",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic","맑은 고딕",sans-serif;
 }
 *{box-sizing:border-box}
 html{font-size:16px;-webkit-text-size-adjust:100%}
@@ -349,17 +351,26 @@ const CONTENT = {
     { key: 'sheet13',    label: '13차시 정리용 구글 시트 링크',           btn: '정리용 구글 시트 열기' },
     { key: 'entry14',    label: '14차시 엔트리 링크',                     btn: '엔트리 열기' },
     { key: 'kotra14',    label: '14차시 KOTRA 해외 경제 정보 드림 링크',  btn: '해외 경제 정보 드림 열기' },
+    { key: 'game15',     label: '15차시 무역 놀이 앱 링크',               btn: '무역 놀이 앱 열기' },
     { key: 'sheet15',    label: '15차시 기록 시트 링크',                  btn: '기록 시트 열기' },
     { key: 'samboard16', label: '16차시 샘보드 링크',                     btn: '샘보드 열기' },
     { key: 'gem16',      label: '16차시 AI 챗봇(Gem) 링크',               btn: 'AI 챗봇에게 물어보기' }
   ],
   defaultLinks: {
+    game15: 'https://script.google.com/macros/s/AKfycbwNaUmyVQcxe_-Z_xH6e6mdbMB1kiPDiyrFPybNfMd5eixUjRoJqOY-6_cbO14zkiu8/exec',
     gem16: 'https://gemini.google.com/gem/1v5gQpdR7d7sNdbUVGPsDOX4NVmcfzEX3?usp=sharing',
     kotra14: 'https://dream.kotra.or.kr/'
   },
   defaultGroups: 6,
-  defaultPin: '0000',
-  countries: ['사랑 나라', '희망 나라', '소망 나라', '행복 나라'],
+  defaultPin: '1234',
+  /* 15차시 무역 놀이 앱(구글 Apps Script)의 나라와 비밀번호 — 나라 이름은 앱과 같게 고쳐 주세요 */
+  game: {
+    teacherPw: '1234',
+    logins: [
+      { name: '한국', pw: '1111' }, { name: '2번 나라', pw: '2222' }, { name: '3번 나라', pw: '3333' },
+      { name: '4번 나라', pw: '4444' }, { name: '5번 나라', pw: '5555' }, { name: '6번 나라', pw: '6666' }
+    ]
+  },
 
   lessons: {
     /* ---------------------------------- 12차시 ---------------------------------- */
@@ -762,7 +773,7 @@ const CONTENT = {
         social: '세계 여러 나라가 무역을 하며 경쟁과 상호 의존 관계를 맺는다는 것을 이해할 수 있다.',
         ai: '무역 놀이 결과를 데이터로 정리하고 차트로 비교하여 관계를 해석할 수 있다.'
       },
-      flow: [['도입', 3], ['경쟁·상호 의존', 8], ['놀이 방법·점수 규칙', 4], ['무역 놀이', 15], ['기록·차트', 6], ['관계 정리·마무리', 4]],
+      flow: [['도입', 3], ['경쟁·상호 의존', 8], ['놀이 앱 열기', 4], ['무역 놀이', 15], ['기록·차트', 6], ['관계 정리·마무리', 4]],
       steps: [
         {
           title: '같은 상품을 파는 두 나라', tool: 'text',
@@ -815,55 +826,42 @@ const CONTENT = {
           }
         },
         {
-          title: '놀이 방법과 점수 규칙', tool: 'rules15',
-          task: '놀이를 시작하기 전에 방법과 점수 규칙을 먼저 확인하세요.',
+          title: '무역 놀이 앱 열기', tool: 'game15open',
+          task: '무역 놀이 앱을 열고, 우리 모둠 나라로 들어가세요.',
           book: '교과서 104~105쪽',
           data: {
-            how: [
-              '활동 자료 9, 10의 생산 카드와 상품 카드를 모두 모아 선생님께 제출',
-              '제비뽑기로 나라를 정하고 정해진 개수대로 생산 카드 받기',
-              '‘상품별 생산 카드’ 표대로 조합해 상품 카드로 바꾸기',
-              '다른 나라와 자유롭게 협상해 교환하기'
+            steps: [
+              '무역 놀이 앱 버튼을 누르거나 QR을 찍어요.',
+              '우리 모둠 나라를 고르고, 선생님이 알려 준 비밀번호를 넣어요.',
+              '앱 안의 놀이 방법과 점수 규칙을 먼저 읽어요.',
+              '다른 나라와 자유롭게 협상해 교환해요.'
             ],
-            msg: '종류가 많을수록 점수가 커요. 혼자서 여러 종류를 만들 수 있을까요?'
+            pwNote: '비밀번호는 선생님이 모둠마다 알려 줘요. 다른 모둠에게 알려 주지 마세요.',
+            msg: '혼자서 여러 종류의 상품을 만들 수 있을까요? 무엇이 부족한지 살펴보세요.'
           },
           teacher: {
-            ask: '종류가 많을수록 추가 점수를 주는 까닭은?',
-            answer: '여러 종류를 가지려면 다른 나라와 바꿔야 하니까요.',
-            key: '점수 = 상품 카드 개수 + 종류 추가 점수(5종 5점, 6종 10점, 7종 15점, 8종 20점). 예: 9장·6종류 → 19점',
-            tip: '나라 제비뽑기는 교사 도구 서랍에서 할 수 있어요. 결과는 7단계 기록표에 자동으로 들어가요.',
+            ask: '우리 나라에 부족한 것은 무엇인가요? 어떻게 구할 수 있을까요?',
+            answer: '기술(또는 노동)이 부족해요. 다른 나라와 바꿔야 해요.',
+            key: '{gameLogins}',
+            tip: '비밀번호는 교사 카드와 놀이 진행 화면(교사 모드)에만 보여요. 모둠별로 따로 알려 주세요. 나라 배정은 교사 도구 서랍의 나라 제비뽑기로 할 수 있어요.',
             time: '4분'
           }
         },
         {
-          title: '생산 계산기', tool: 'calc15',
-          task: '우리 나라를 고르고, 만들 수 있는 상품을 만든 뒤 무역 전 기록을 잠그세요.',
-          data: {
-            lockHelp: '③ 상품 카드로 바꾸기를 마친 뒤, ④ 협상을 시작하기 전에 누르세요.'
-          },
-          teacher: {
-            ask: '우리 나라는 무엇을 만들 수 있고, 무엇을 만들 수 없나요?',
-            answer: '(사랑 나라) 기술 카드가 없어서 장난감, 과일, 과자만 만들 수 있어요.',
-            key: '사랑 나라는 기술 0장이라 무역 전에는 옷·스마트폰·컴퓨터·자동차·세탁기를 만들 수 없어요.',
-            tip: '웹앱 숫자는 종이 카드와 맞추는 용도예요. 잘못 잠근 모둠은 교사 모드에서 잠금을 풀 수 있어요.',
-            time: '무역 놀이 15분 중 앞부분(약 5분)'
-          }
-        },
-        {
-          title: '놀이 진행 화면', tool: 'play15',
-          task: '선생님 화면을 보며 다른 나라와 자유롭게 협상해 교환하세요.',
+          title: '무역 놀이 진행', tool: 'game15play',
+          task: '무역 놀이 앱에서 다른 나라와 자유롭게 협상해 교환하세요.',
           data: { defaultMin: 15 },
           teacher: {
-            ask: '무역 전 개수를 왜 먼저 잠가야 할까요?',
+            ask: '무역을 하기 전과 후의 점수를 왜 꼭 기록해야 할까요?',
             answer: '무역 전과 후를 비교해야 무엇이 달라졌는지 알 수 있으니까요.',
-            key: '모든 모둠이 무역 전 개수를 잠근 뒤 협상을 시작해요.',
-            tip: '이 화면을 놀이 내내 전자칠판에 띄워 두세요. 모둠별 체크는 손을 든 모둠부터 눌러요.',
-            time: '무역 놀이 15분 중 협상(약 10분)'
+            key: '{gameLogins}',
+            tip: '이 화면을 놀이 내내 전자칠판에 띄워 두세요. 교사용 화면은 무역 놀이 앱에 교사 비밀번호로 들어가요.',
+            time: '15분'
           }
         },
         {
           title: '무역 후 기록과 점수', tool: 'record15',
-          task: '무역 후 상품 카드 개수를 입력하고, 점수를 비교해 보세요.',
+          task: '무역 놀이 앱의 결과를 보고, 무역 전과 후의 점수를 기록하세요.',
           data: {
             hardCards: ['기술', '자본', '노동', '자원'],
             example: [['사랑 나라', 22], ['희망 나라', 10], ['소망 나라', 30], ['행복 나라', 15]]
@@ -872,7 +870,7 @@ const CONTENT = {
             ask: '무역 전과 후의 점수를 비교하면 무엇을 알 수 있나요?',
             answer: '대부분 점수가 올랐어요. 서로 바꾸니까 이익이 됐어요.',
             key: '{class15Summary}',
-            tip: '기록 시트에서 [모둠, 나라, 무역 전, 무역 후, 구하기 어려웠던 카드] 순서로 칸을 복사해 붙여 넣거나, 표에 직접 입력하세요.',
+            tip: '무역 놀이 앱의 결과를 보고 표에 직접 넣거나, [모둠, 나라, 무역 전, 무역 후, 구하기 어려웠던 카드] 순서로 칸을 복사해 붙여 넣으세요.',
             time: '6분'
           }
         },
@@ -1208,6 +1206,7 @@ const qtext = s => esc(s).replace(/\(\s+\)/g, '(<span class="blank"></span>)');
 const fmt = n => Number(n).toLocaleString('ko-KR');
 const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
 const C = CONTENT;
+C.countries = C.game.logins.map(l => l.name);
 const LS = id => C.lessons[id];
 
 function settings() {
@@ -1286,6 +1285,12 @@ function openModal(html, cls = '') {
   const f = $('#modalRoot input, #modalRoot button'); if (f) f.focus();
 }
 function closeModal() { $('#modalRoot').innerHTML = ''; }
+/* 확인 창(브라우저 confirm 대신 화면 안 대화상자) */
+let askYes = null;
+function ask(msg, yes, yesLabel = '네') {
+  askYes = yes;
+  openModal(`<h2>확인</h2><p>${esc(msg)}</p><div class="btn-row"><button class="btn" data-act="askYes">${esc(yesLabel)}</button><button class="btn plain" data-act="modalClose">아니요</button></div>`);
+}
 async function copyText(text) {
   let ok = false;
   try { if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(text); ok = true; } } catch (e) { ok = false; }
@@ -1366,10 +1371,11 @@ function barChart(el, labels, data, opts = {}) {
 /* ---------- 상태와 화면 전환 ---------- */
 const state = { view: 'home', lesson: null, page: 0, teacher: sessionTeacher, drawer: false, drawerTab: 'timer' };
 function parseHash() {
-  const h = (location.hash || '').replace(/^#\/?/, '');
-  const parts = h.split('/');
-  if (parts[0] === 'settings') { state.view = state.teacher ? 'settings' : 'home'; return; }
-  if (/^1[2-6]$/.test(parts[0])) { state.view = 'lesson'; state.lesson = +parts[0]; state.page = Math.max(0, parseInt(parts[1], 10) || 0); return; }
+  /* 주소 뒤 #이름: #home, #setup, #l12-0 (12차시 0쪽) */
+  const h = (location.hash || '').replace(/^#/, '');
+  if (h === 'setup') { state.view = state.teacher ? 'settings' : 'home'; return; }
+  const m = /^l(1[2-6])-(\d+)$/.exec(h);
+  if (m) { state.view = 'lesson'; state.lesson = +m[1]; state.page = +m[2]; return; }
   state.view = 'home';
 }
 function go(hash) { if (location.hash === hash) render(); else location.hash = hash; }
@@ -1378,7 +1384,7 @@ window.addEventListener('hashchange', () => { parseHash(); render(); window.scro
 function setTeacher(on) {
   state.teacher = on;
   try { sessionStorage.setItem('tradeApp_teacher', on ? '1' : '0'); } catch (e) { /* 무시 */ }
-  if (!on) { state.drawer = false; if (state.view === 'settings') { location.hash = '#/'; return; } }
+  if (!on) { state.drawer = false; if (state.view === 'settings') { location.hash = '#home'; return; } }
   render();
 }
 
@@ -1594,12 +1600,15 @@ function settingsHTML() {
       ${C.links.map(l => `<div class="link-field"><label for="ln_${l.key}" style="font-weight:600;color:var(--title)">${esc(l.label)}</label><input type="url" id="ln_${l.key}" data-link="${l.key}" value="${esc(s.links[l.key] || '')}" placeholder="https://"></div>`).join('')}
     </section>
     <section class="card"><h2>학급 데이터</h2>
-      <p class="note">12차시 원산지 목록, 투표, 15차시 모둠 점수 등은 이 기기에만 저장돼요. 다른 기기로 옮기거나 보관하려면 백업하세요.</p>
+      <p class="note">12차시 원산지 목록, 투표, 15차시 모둠 점수 등은 이 기기(브라우저)에만 저장돼요. 다른 기기로 옮기거나 보관하려면 백업하세요.</p>
       <div class="btn-row">
-        <button class="btn" data-act="backup">${icon('download')} 백업(JSON 내려받기)</button>
+        <button class="btn" data-act="backup">${icon('copy')} 백업 내용 복사하기</button>
         <label class="btn ghost" style="cursor:pointer">${icon('upload')} 복원(파일 올리기)<input type="file" id="restoreFile" accept="application/json,.json" class="sr"></label>
         <button class="btn warn" data-act="resetAll">${icon('trash')} 전체 초기화</button>
       </div>
+      <p class="small">백업 내용은 메모장이나 구글 문서에 붙여 넣어 보관하세요. 복원할 때는 아래 칸에 붙여 넣거나 .json 파일을 올리세요.</p>
+      <textarea id="restoreText" placeholder="백업 내용을 여기에 붙여 넣으세요." style="min-height:70px"></textarea>
+      <div class="btn-row"><button class="btn ghost sm" data-act="restorePaste">붙여 넣은 내용으로 복원</button></div>
       <p class="small">저장 상태: ${Store.ok ? '이 브라우저에 저장 중' : '저장 불가(새로고침하면 지워져요)'}</p>
     </section>
   </div>`;
@@ -1607,26 +1616,18 @@ function settingsHTML() {
 function doBackup() {
   const data = {};
   Store.keys().forEach(k => { data[k] = Store.get(k, null); });
-  const blob = new Blob([JSON.stringify({ app: C.app.title, savedAt: new Date().toISOString(), data }, null, 2)], { type: 'application/json' });
-  const a = document.createElement('a');
-  const d = new Date();
-  a.href = URL.createObjectURL(blob);
-  a.download = `ai-trade-backup-${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}.json`;
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-  toast('백업 파일을 내려받았어요.');
+  copyText(JSON.stringify({ app: C.app.title, savedAt: new Date().toISOString(), data }));
+}
+function restoreFrom(text) {
+  try {
+    const obj = JSON.parse(text);
+    if (!obj || typeof obj.data !== 'object') throw new Error('형식');
+    ask('지금 기기의 데이터를 백업 내용으로 바꿀까요?', () => { Object.keys(obj.data).forEach(k => Store.set(k, obj.data[k])); toast('복원했어요.'); render(); });
+  } catch (e) { toast('백업 내용을 읽을 수 없어요.'); }
 }
 function doRestore(file) {
   const r = new FileReader();
-  r.onload = () => {
-    try {
-      const obj = JSON.parse(r.result);
-      if (!obj || typeof obj.data !== 'object') throw new Error('형식');
-      if (!confirm('지금 기기의 데이터를 백업 파일 내용으로 바꿀까요?')) return;
-      Object.keys(obj.data).forEach(k => Store.set(k, obj.data[k]));
-      toast('복원했어요.'); render();
-    } catch (e) { toast('백업 파일을 읽을 수 없어요.'); }
-  };
+  r.onload = () => restoreFrom(r.result);
   r.readAsText(file);
 }
 
@@ -1694,7 +1695,7 @@ function renderDrawer() {
   }
   if (state.drawerTab === 'country') {
     const a = Store.get('countryDraw', null);
-    body = `<p class="note">사랑·희망·소망·행복 나라를 모둠에 무작위로 배정해요. 모둠이 4개보다 많으면 한 나라를 두 모둠이 함께 맡아요.</p>
+    body = `<p class="note">무역 놀이 앱의 나라(${esc(C.countries.join('·'))})를 모둠에 무작위로 배정해요. 모둠이 나라보다 많으면 한 나라를 두 모둠이 함께 맡아요.</p>
       <div class="btn-row"><button class="btn" data-act="drawCountry">${icon('shuffle')} 나라 제비뽑기</button></div>
       ${a ? `<div class="assign">${groupList().map(g => `<div>${g}모둠 → <b>${esc(a[g] || '-')}</b></div>`).join('')}</div><p class="small">결과는 15차시 기록표에 자동으로 들어가요.</p>` : ''}`;
   }
@@ -1726,10 +1727,10 @@ function drawCountries() {
 
 /* ---------- 이벤트(한곳에서 처리) ---------- */
 const ACT = {
-  home() { go('#/'); },
-  open(el) { go(`#/${el.dataset.id}/0`); },
+  home() { go('#home'); },
+  open(el) { go(`#l${el.dataset.id}-0`); },
   present() { document.documentElement.classList.toggle('present'); renderTop(); refresh(); },
-  settings() { go('#/settings'); },
+  settings() { go('#setup'); },
   teacher() {
     if (state.teacher) { setTeacher(false); toast('교사 모드를 껐어요.'); return; }
     openModal(`<h2>교사 모드</h2><p class="note">4자리 숫자를 입력하세요.</p>
@@ -1740,12 +1741,13 @@ const ACT = {
   },
   modalBack(el, e) { if (e.target === el) closeModal(); },
   modalClose() { closeModal(); },
-  prev() { if (state.page > 0) go(`#/${state.lesson}/${state.page - 1}`); },
-  nextPage() { const n = pagesOf(LS(state.lesson)).length; if (state.page < n - 1) go(`#/${state.lesson}/${state.page + 1}`); },
-  page(el) { go(`#/${state.lesson}/${el.dataset.i}`); },
+  askYes() { const f = askYes; askYes = null; closeModal(); if (f) f(); },
+  prev() { if (state.page > 0) go(`#l${state.lesson}-${state.page - 1}`); },
+  nextPage() { const n = pagesOf(LS(state.lesson)).length; if (state.page < n - 1) go(`#l${state.lesson}-${state.page + 1}`); },
+  page(el) { go(`#l${state.lesson}-${el.dataset.i}`); },
   finish() {
     const done = Store.get('done', {}) || {}; done[state.lesson] = true; Store.set('done', done);
-    toast(`${state.lesson}차시를 마쳤어요!`); go('#/');
+    toast(`${state.lesson}차시를 마쳤어요!`); go('#home');
   },
   /* 문제 */
   qcheck(el) {
@@ -1776,11 +1778,11 @@ const ACT = {
     saveSettings({ pin: v }); $('#newPin').value = ''; toast('교사 모드 숫자를 바꿨어요.');
   },
   backup() { doBackup(); },
+  restorePaste() { restoreFrom(($('#restoreText') || {}).value || ''); },
   resetAll() {
-    if (!confirm('이 기기의 모든 학급 데이터와 설정을 지울까요?')) return;
-    if (!confirm('정말 지울까요? 되돌릴 수 없어요. (먼저 백업을 권해요)')) return;
-    Store.keys().forEach(k => Store.del(k));
-    toast('전체 초기화했어요.'); render();
+    ask('이 기기의 모든 학급 데이터와 설정을 지울까요?', () => setTimeout(() => ask('정말 지울까요? 되돌릴 수 없어요. (먼저 백업을 권해요)', () => {
+      Store.keys().forEach(k => Store.del(k)); toast('전체 초기화했어요.'); render();
+    }, '모두 지우기'), 0));
   },
   /* 서랍 */
   drawer() { state.drawer = !state.drawer; renderDrawer(); },
@@ -1925,6 +1927,7 @@ function linreg(from, to) {
 
 /* 교사 카드의 데이터 요약 */
 const DYN = {
+  gameLogins() { return '무역 놀이 앱 비밀번호 — ' + [['교사용', C.game.teacherPw]].concat(C.game.logins.map(l => [l.name, l.pw])).map(([n, p]) => `${esc(n)} ${esc(p)}`).join(' · '); },
   class12Summary() {
     const rows = class12();
     if (!rows.length) return '학급 데이터가 아직 없어요. 예시 데이터 기준: 14개 조사, 가장 많은 라벨 China 3개, 같은 중국이 China·중국산·Made in PRC·중국으로 나뉘어 보임.';
@@ -1945,7 +1948,7 @@ const DYN = {
     const rows = class15();
     const both = rows.filter(r => Number.isFinite(r.before) && Number.isFinite(r.after));
     const hard = countBy(rows.map(r => r.hard).filter(Boolean));
-    const ans = esc(C.lessons[15].steps[7].data.answer);
+    const ans = esc(C.lessons[15].steps.find(x => x.tool === 'rel15').data.answer);
     if (!both.length && !hard.length) return `학급 데이터가 없어요. 정답 문장: ${ans}`;
     return `우리 반: 점수가 오른 모둠 ${both.filter(r => r.after > r.before).length}개(상호 의존의 증거) · 가장 구하기 어려웠던 카드 ${hard.length ? esc(hard[0][0]) + ' ' + hard[0][1] + '모둠' : '-'}(경쟁의 증거)<br>정답 문장: ${ans}`;
   }
@@ -2050,9 +2053,8 @@ Object.assign(ACT, {
   c12Paste(el) {
     const rows = parse12(($('#paste12') || {}).value);
     if (!rows.length) { toast('읽을 수 있는 줄이 없어요. 4열인지 확인해 주세요.'); return; }
-    if (el.dataset.mode === 'replace' && class12().length && !confirm('지금 데이터를 지우고 새로 바꿀까요?')) return;
-    Store.set('class12', el.dataset.mode === 'replace' ? rows : class12().concat(rows));
-    toast(`${rows.length}줄을 가져왔어요.`); refresh();
+    const doIt = () => { Store.set('class12', el.dataset.mode === 'replace' ? rows : class12().concat(rows)); toast(`${rows.length}줄을 가져왔어요.`); refresh(); };
+    if (el.dataset.mode === 'replace' && class12().length) ask('지금 데이터를 지우고 새로 바꿀까요?', doIt); else doIt();
   },
   c12Add() {
     const item = $('#m12item').value.trim(); if (!item) { toast('물건 이름을 넣어 주세요.'); return; }
@@ -2060,7 +2062,7 @@ Object.assign(ACT, {
     Store.set('class12', rows); refresh(); const f = $('#m12item'); if (f) f.focus();
   },
   c12Del(el) { const rows = class12(); rows.splice(+el.dataset.i, 1); Store.set('class12', rows); refresh(); },
-  c12Clear() { if (confirm('우리 반 원산지 데이터를 모두 지울까요?')) { Store.set('class12', []); refresh(); } }
+  c12Clear() { ask('우리 반 원산지 데이터를 모두 지울까요?', () => { Store.set('class12', []); refresh(); }); }
 });
 
 /* 12-5 무역의 의미 */
@@ -2103,7 +2105,7 @@ TOOLS.vote12 = {
 };
 Object.assign(ACT, {
   tally(el) { const v = vote12(); const g = el.dataset.g; v[g] = v[g] || { o: 0, x: 0 }; v[g][el.dataset.k] = Math.max(0, v[g][el.dataset.k] + (+el.dataset.d)); Store.set('vote12', v); refresh(); },
-  tallyReset() { if (confirm('투표 집계를 처음부터 다시 할까요?')) { Store.set('vote12', {}); refresh(); } },
+  tallyReset() { ask('투표 집계를 처음부터 다시 할까요?', () => { Store.set('vote12', {}); refresh(); }); },
   copyVote() { const k = `${state.lesson}.vote`; copyText(`${C.lessons[12].steps[5].data.claim}\n내 생각: ${Ans.get(k + '.ox', '-')}\n까닭: ${Ans.get(k, '')}`); }
 });
 
@@ -2455,103 +2457,38 @@ TOOLS.words15 = {
       <div class="mini" style="margin-top:12px"><h3>사례</h3><p>${esc(d.caseTitle)}</p><p class="note">교과서 103쪽 사례를 읽고, 어떤 나라들이 무엇을 주고받는지 찾아보세요.</p></div>`;
   }
 };
-function scoreRuleHTML() {
-  return `<div class="score-card"><h3 style="font-size:1.25rem">점수 규칙 <span class="small">교과서 105쪽</span></h3>
-    <p style="font-size:1.3rem;color:var(--title);font-weight:700">${esc(D.scoreRule[0])}</p>
-    <div class="tbl-wrap"><table class="tbl"><thead><tr><th>상품 종류 수</th>${[5, 6, 7, 8].map(n => `<th class="num">${n}종류</th>`).join('')}</tr></thead>
-    <tbody><tr><td>추가 점수</td>${[5, 6, 7, 8].map(n => `<td class="num"><b>${D.bonus[n]}점</b></td>`).join('')}</tr></tbody></table></div></div>`;
+/* 15-4 무역 놀이 앱 열기 */
+function loginTableHTML() {
+  return `<div class="tbl-wrap"><table class="tbl compact"><thead><tr><th>들어가는 곳</th><th>비밀번호</th></tr></thead><tbody>
+    <tr><td><b>교사용</b></td><td><b>${esc(C.game.teacherPw)}</b></td></tr>
+    ${C.game.logins.map(l => `<tr><td>${esc(l.name)}</td><td><b>${esc(l.pw)}</b></td></tr>`).join('')}</tbody></table></div>`;
 }
-TOOLS.rules15 = {
+TOOLS.game15open = {
   html(s) {
-    return `<div class="grid2"><div class="mini"><h3>놀이 방법</h3><ol style="margin:4px 0 0;padding-left:1.3em">${s.data.how.map(h => `<li>${esc(h)}</li>`).join('')}</ol></div>${scoreRuleHTML()}</div>
-      <div class="callout" style="font-size:1.3rem"><b>${esc(s.data.msg)}</b></div>`;
-  }
+    const d = s.data, url = link('game15');
+    return `<div class="grid2"><div class="mini"><h3>이렇게 해요</h3><ol style="margin:4px 0 0;padding-left:1.3em">${d.steps.map(x => `<li>${esc(x)}</li>`).join('')}</ol>
+        <div class="callout warn" style="margin-top:10px">${esc(d.pwNote)}</div></div>
+      <div class="mini" style="text-align:center"><h3>무역 놀이 앱</h3><div class="btn-row" style="justify-content:center">${linkBtn('game15', null, { cls: '' })}</div>${url ? '<div class="qr-box" id="qr15"></div>' : ''}</div></div>
+      <div class="callout" style="font-size:1.25rem"><b>${esc(d.msg)}</b></div>`;
+  },
+  mount(el) { const q = $('#qr15', el); if (q) makeQR(q, link('game15'), 170); }
 };
-
-/* 15-5 생산 계산기 */
-function st15() {
-  const s = Store.get('l15', null) || {};
-  return Object.assign({ group: '', country: '', cards: null, made: {}, locked: false, before: null, after: null, hard: '' }, s);
-}
-function save15(s) { Store.set('l15', s); }
-function lack15(cards, need) {
-  return D.resources.filter(r => (need[r] || 0) > (cards[r] || 0)).map(r => `${r} ${(need[r] || 0) - (cards[r] || 0)}장`);
-}
-TOOLS.calc15 = {
+/* 15-5 무역 놀이 진행 */
+TOOLS.game15play = {
   html(s) {
-    const st = st15(), draw = Store.get('countryDraw', null) || {};
-    const groupSel = `<select data-ch="c15group" aria-label="우리 모둠" ${st.locked ? 'disabled' : ''}><option value="">모둠 고르기</option>${groupList().map(g => `<option value="${g}" ${String(st.group) === String(g) ? 'selected' : ''}>${g}모둠</option>`).join('')}</select>`;
-    const ctrySel = `<select data-ch="c15country" aria-label="우리 나라" ${st.locked ? 'disabled' : ''}><option value="">나라 고르기</option>${C.countries.map(c => `<option ${st.country === c ? 'selected' : ''}>${c}</option>`).join('')}</select>`;
-    const hint = st.group && draw[st.group] && !st.country ? `<span class="badge">제비뽑기 결과: ${esc(draw[st.group])}</span>` : '';
-    if (!st.country) return `<div class="btn-row">${groupSel}${ctrySel}${hint}</div><div class="callout">우리 모둠과 제비뽑기로 정한 나라를 고르세요.</div>`;
-    const cards = st.cards;
-    const sc = score15(st.made);
-    return `<div class="btn-row">${groupSel}${ctrySel}${st.locked ? '' : `<button class="btn plain sm" data-act="c15restart">${icon('reset', 18)} 처음부터</button>`}</div>
-      <div class="res-row" aria-label="남은 생산 카드">${D.resources.map(r => `<div class="res ${cards[r] ? '' : 'zero'}">${r}<b>${cards[r]}</b></div>`).join('')}<span class="note" style="align-self:center">남은 생산 카드</span></div>
-      <div class="prod-grid" style="margin-top:10px">${D.products.map((p, i) => {
-        const lack = lack15(cards, p.need), can = !lack.length, n = st.made[p.name] || 0;
-        return `<div class="prod ${can ? 'can' : ''}"><h3><span>${esc(p.name)}</span><span class="cnt">${n}</span></h3>
-          <div class="rec">${Object.entries(p.need).map(([r, v]) => `${r} ${v}`).join(' · ')}</div>
-          <div class="st ${can ? '' : 'no'}">${can ? '만들 수 있음' : esc(lack.join(', ')) + ' 부족'}</div>
-          <div class="btn-row" style="margin:4px 0 0"><button class="btn sm" data-act="c15make" data-i="${i}" ${can && !st.locked ? '' : 'disabled'}>만들기</button><button class="btn plain sm" data-act="c15undo" data-i="${i}" ${n && !st.locked ? '' : 'disabled'} aria-label="${esc(p.name)} 하나 되돌리기">${icon('minus', 16)}</button></div></div>`;
-      }).join('')}</div>
-      <p style="margin-top:8px;color:var(--title)">지금 상품 카드 <b>${sc.total}</b>장 · <b>${sc.kinds}</b>종류 → 점수 <b style="color:var(--blue);font-size:1.4rem">${sc.score}</b>점 <span class="small">(${sc.total} + 종류 추가 ${sc.bonus})</span></p>
-      <div class="lockbar ${st.locked ? 'locked' : ''}">${st.locked
-        ? `<span>${icon('lock')} <b>무역 전 기록을 잠갔어요.</b> 무역 전 ${score15(st.before).score}점</span>${state.teacher ? `<button class="btn warn sm" data-act="c15unlock">${icon('unlock', 18)} 잠금 풀기(교사)</button>` : ''}`
-        : `<span class="small">${esc(s.data.lockHelp)}</span><button class="btn" data-act="c15lock" ${st.group ? '' : 'disabled'}>${icon('lock')} 무역 전 기록 잠그기</button>`}</div>
-      ${!st.group ? '<p class="small">잠그려면 모둠을 먼저 고르세요.</p>' : ''}`;
-  }
-};
-CH.c15group = t => {
-  const st = st15(); st.group = t.value;
-  const draw = Store.get('countryDraw', null) || {};
-  if (!st.country && draw[t.value]) { st.country = draw[t.value]; st.cards = Object.assign({}, D.countryCards[st.country]); st.made = {}; }
-  save15(st); refresh();
-};
-CH.c15country = t => {
-  const st = st15();
-  if (Object.values(st.made || {}).some(n => n > 0) && !confirm('나라를 바꾸면 만든 상품이 지워져요. 바꿀까요?')) { t.value = st.country; return; }
-  st.country = t.value; st.cards = t.value ? Object.assign({}, D.countryCards[t.value]) : null; st.made = {}; save15(st); refresh();
-};
-Object.assign(ACT, {
-  c15make(el) {
-    const st = st15(); if (st.locked) return; const p = D.products[+el.dataset.i];
-    if (lack15(st.cards, p.need).length) return;
-    Object.entries(p.need).forEach(([r, v]) => { st.cards[r] -= v; });
-    st.made[p.name] = (st.made[p.name] || 0) + 1; save15(st); refresh();
-  },
-  c15undo(el) {
-    const st = st15(); if (st.locked) return; const p = D.products[+el.dataset.i];
-    if (!(st.made[p.name] > 0)) return;
-    Object.entries(p.need).forEach(([r, v]) => { st.cards[r] += v; });
-    st.made[p.name] -= 1; save15(st); refresh();
-  },
-  c15restart() { if (!confirm('만든 상품을 모두 되돌릴까요?')) return; const st = st15(); st.cards = Object.assign({}, D.countryCards[st.country]); st.made = {}; save15(st); refresh(); },
-  c15lock() {
-    const st = st15(); if (!confirm('무역 전 개수를 잠글까요? 잠그면 고칠 수 없어요.')) return;
-    st.locked = true; st.before = Object.assign({}, st.made); if (!st.after) st.after = Object.assign({}, st.made); save15(st); refresh(); toast('무역 전 기록을 잠갔어요.');
-  },
-  c15unlock() { const st = st15(); st.locked = false; save15(st); refresh(); toast('잠금을 풀었어요.'); }
-});
-
-/* 15-6 놀이 진행 화면 */
-TOOLS.play15 = {
-  html(s) {
-    const how = C.lessons[15].steps[3].data.how;
-    const howHTML = `<div class="mini"><h3>놀이 방법</h3><ol style="margin:4px 0 0;padding-left:1.3em">${how.map(h => `<li>${esc(h)}</li>`).join('')}</ol></div>`;
     if (!state.teacher) {
-      const st = st15();
-      return `<div class="grid2">${howHTML}${scoreRuleHTML()}</div>
-        <div class="lockbar ${st.locked ? 'locked' : ''}">${st.locked ? `${icon('lock')} 우리 모둠은 무역 전 기록을 잠갔어요.` : `${icon('unlock')} 아직 잠그지 않았어요. 5단계 생산 계산기에서 잠그세요.`}</div>`;
+      return `<div class="callout" style="font-size:1.3rem"><b>무역 놀이 앱에서 다른 나라와 협상하고 교환해요.</b></div>
+        <div class="btn-row">${linkBtn('game15', null, { cls: '' })}</div>
+        <p class="note">무역 전 점수와 무역 후 점수를 꼭 기억해 두세요. 다음 단계에서 기록해요.</p>`;
     }
-    const lk = Store.get('lock15', {}) || {};
-    return `<div class="grid2"><div class="mini">${timerHTML()}</div><div>${howHTML}</div></div>
-      <div class="grid2" style="margin-top:10px">${scoreRuleHTML()}
-        <div class="mini"><h3>무역 전 개수를 잠갔나요?</h3><div class="check-list">${groupList().map(g => `<label><input type="checkbox" data-ch="lock15" data-g="${g}" ${lk[g] ? 'checked' : ''}> ${g}모둠</label>`).join('')}</div></div></div>`;
+    const draw = Store.get('countryDraw', null);
+    return `<div class="grid2"><div class="mini">${timerHTML()}</div>
+      <div class="mini"><h3>나라별 비밀번호 <span class="small">교사 모드에서만 보여요</span></h3>${loginTableHTML()}
+        ${draw ? `<p class="small" style="margin-top:6px">나라 배정: ${groupList().map(g => `${g}모둠 ${esc(draw[g] || '-')}`).join(' · ')}</p>` : ''}
+        <div class="btn-row">${linkBtn('game15', null, { cls: '' })}</div></div></div>`;
   },
   mount(el, s) { if (state.teacher && !Timer.running && Timer.left === Timer.total && Timer.total !== s.data.defaultMin * 60) Timer.set(s.data.defaultMin); }
 };
-CH.lock15 = t => { const lk = Store.get('lock15', {}) || {}; lk[t.dataset.g] = t.checked; Store.set('lock15', lk); };
 
 /* 15-7 무역 후 기록과 점수 */
 let ui15 = 'chart';
@@ -2590,20 +2527,19 @@ TOOLS.record15 = {
       <div class="mini" style="margin-top:10px"><h3>기록 시트에서 붙여넣기</h3><p class="small">모둠 / 나라 / 무역 전 점수 / 무역 후 점수 / 구하기 어려웠던 카드 순서. 제목 줄은 건너뛰어요.</p>
         <textarea id="paste15" style="min-height:80px"></textarea><div class="btn-row"><button class="btn" data-act="r15Paste">가져오기</button><button class="btn warn sm" data-act="r15Clear">${icon('trash', 18)} 모두 지우기</button>${linkBtn('sheet15')}</div></div>`;
     }
-    const st = st15();
-    if (!st.country) return '<div class="callout">5단계 생산 계산기에서 우리 모둠과 나라를 먼저 고르세요.</div>';
-    const before = st.before || st.made || {}, after = st.after || Object.assign({}, before);
-    const b = score15(before), a = score15(after);
-    return `${st.locked ? '' : '<div class="callout warn">무역 전 기록을 아직 잠그지 않았어요. 5단계에서 먼저 잠그면 정확히 비교할 수 있어요.</div>'}
-      <div class="grid2"><div><div class="chart-title">무역 후 상품 카드 개수</div>
-        <div class="tbl-wrap"><table class="tbl compact"><thead><tr><th>상품</th><th class="num">무역 전</th><th class="num">무역 후</th></tr></thead><tbody>
-        ${D.products.map(p => `<tr><td>${esc(p.name)}</td><td class="num">${before[p.name] || 0}</td><td class="num"><input type="number" min="0" class="num" data-r15after="${esc(p.name)}" value="${after[p.name] || 0}" style="width:5em" aria-label="${esc(p.name)} 무역 후 개수"></td></tr>`).join('')}
-        </tbody></table></div></div>
-      <div><div class="score-card" id="score15">${score15Table(b, a)}</div>
-        <h3 style="margin-top:10px;font-size:1.1rem">가장 구하기 어려웠던 카드</h3>
-        <div class="btn-row">${d.hardCards.map(c => `<button class="btn ${st.hard === c ? '' : 'plain'} sm" data-act="r15hard" data-v="${c}">${c}</button>`).join('')}</div>
-        <div class="btn-row"><button class="btn" data-act="r15copy">${icon('copy', 18)} 한 줄 결과 복사하기</button>${linkBtn('sheet15')}</div>
-        <p class="small">복사하면 [모둠, 나라, 무역 전 점수, 무역 후 점수, 어려웠던 카드]가 칸에 나뉘어 붙어요.</p></div></div>`;
+    const k = '15.rec', v = f => Ans.get(`${k}.${f}`, '');
+    const sel = (f, list, lbl) => `<select data-ans="${k}.${f}" aria-label="${lbl}"><option value="">${lbl}</option>${list.map(x => `<option value="${esc(x[0])}" ${String(v(f)) === String(x[0]) ? 'selected' : ''}>${esc(x[1])}</option>`).join('')}</select>`;
+    const b = parseInt(v('before'), 10), af = parseInt(v('after'), 10);
+    const diff = Number.isFinite(b) && Number.isFinite(af) ? af - b : null;
+    return `<div class="btn-row">${sel('group', groupList().map(g => [g, g + '모둠']), '우리 모둠')}${sel('country', C.countries.map(c => [c, c]), '우리 나라')}</div>
+      <div class="grid2"><div class="score-card"><h3 style="font-size:1.15rem">무역 놀이 앱의 점수</h3>
+          <div class="btn-row"><label class="field">무역 전 점수<input type="number" class="num" data-ans="${k}.before" value="${esc(v('before'))}"></label>
+          <label class="field">무역 후 점수<input type="number" class="num" data-ans="${k}.after" value="${esc(v('after'))}"></label></div>
+          <p style="color:var(--title)" id="diff15">${diff == null ? '두 점수를 모두 넣어 주세요.' : `점수가 <b style="color:var(--blue);font-size:1.4rem">${diff > 0 ? '+' : ''}${diff}</b>점 ${diff > 0 ? '올랐어요' : diff < 0 ? '내려갔어요' : '그대로예요'}.`}</p></div>
+        <div><h3 style="font-size:1.1rem">가장 구하기 어려웠던 카드</h3>
+          <div class="btn-row">${d.hardCards.map(c => `<button class="btn ${v('hard') === c ? '' : 'plain'} sm" data-act="r15hard" data-v="${c}">${c}</button>`).join('')}</div>
+          <div class="btn-row"><button class="btn" data-act="r15copy">${icon('copy', 18)} 한 줄 결과 복사하기</button>${linkBtn('sheet15')}</div>
+          <p class="small">복사하면 [모둠, 나라, 무역 전 점수, 무역 후 점수, 어려웠던 카드]가 칸에 나뉘어 붙어요.</p></div></div>`;
   },
   mount(el, s) {
     if (state.teacher && ui15 === 'chart') {
@@ -2623,20 +2559,13 @@ TOOLS.record15 = {
       barChart($('#c15b', el), s.data.hardCards, hard, { label: '모둠 수', headLabel: '카드' });
       return;
     }
-    $$('[data-r15after]', el).forEach(inp => inp.addEventListener('input', () => {
-      const st = st15(); st.after = st.after || {};
-      st.after[inp.dataset.r15after] = Math.max(0, parseInt(inp.value, 10) || 0); save15(st);
-      $('#score15', el).innerHTML = score15Table(score15(st.before || st.made || {}), score15(st.after));
+    $$('[data-ans="15.rec.before"],[data-ans="15.rec.after"]', el).forEach(inp => inp.addEventListener('input', () => {
+      const b = parseInt($('[data-ans="15.rec.before"]', el).value, 10), a = parseInt($('[data-ans="15.rec.after"]', el).value, 10);
+      const d = a - b;
+      $('#diff15', el).innerHTML = Number.isFinite(d) ? `점수가 <b style="color:var(--blue);font-size:1.4rem">${d > 0 ? '+' : ''}${d}</b>점 ${d > 0 ? '올랐어요' : d < 0 ? '내려갔어요' : '그대로예요'}.` : '두 점수를 모두 넣어 주세요.';
     }));
   }
 };
-function score15Table(b, a) {
-  return `<h3 style="font-size:1.15rem">점수 비교</h3><div class="tbl-wrap"><table class="tbl compact"><thead><tr><th></th><th class="num">무역 전</th><th class="num">무역 후</th></tr></thead><tbody>
-    <tr><td>상품 카드 개수</td><td class="num">${b.total}</td><td class="num">${a.total}</td></tr>
-    <tr><td>종류 수</td><td class="num">${b.kinds}</td><td class="num">${a.kinds}</td></tr>
-    <tr><td>종류 추가 점수</td><td class="num">${b.bonus}</td><td class="num">${a.bonus}</td></tr>
-    <tr><td><b>점수</b></td><td class="num"><b>${b.score}</b></td><td class="num"><b style="color:var(--blue);font-size:1.3rem">${a.score}</b></td></tr></tbody></table></div>`;
-}
 CH.r15 = t => {
   const saved = class15(), g = +t.dataset.g;
   let r = saved.find(x => x.g === g);
@@ -2654,11 +2583,11 @@ Object.assign(ACT, {
     rows.forEach(n => { const i = saved.findIndex(x => x.g === n.g); if (i >= 0) saved[i] = n; else saved.push(n); });
     saved.sort((a, b) => a.g - b.g); Store.set('class15', saved); toast(`${rows.length}모둠 점수를 가져왔어요.`); refresh();
   },
-  r15Clear() { if (confirm('15차시 모둠 점수를 모두 지울까요?')) { Store.set('class15', []); refresh(); } },
-  r15hard(el) { const st = st15(); st.hard = el.dataset.v; save15(st); refresh(); },
+  r15Clear() { ask('15차시 모둠 점수를 모두 지울까요?', () => { Store.set('class15', []); refresh(); }); },
+  r15hard(el) { Ans.set('15.rec.hard', el.dataset.v); refresh(); },
   r15copy() {
-    const st = st15(); const b = score15(st.before || st.made || {}), a = score15(st.after || st.before || st.made || {});
-    copyText([`${st.group || '?'}모둠`, st.country, b.score, a.score, st.hard || ''].join('\t'));
+    const v = f => Ans.get('15.rec.' + f, '');
+    copyText([`${v('group') || '?'}모둠`, v('country'), v('before'), v('after'), v('hard')].join('\t'));
   }
 });
 
